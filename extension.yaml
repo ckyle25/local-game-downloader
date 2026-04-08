@@ -1,0 +1,7 @@
+﻿Id: LocalGameDownloader_9925d475-baad-480c-b219-e7d500e382a1
+Name: Local Game Downloader
+Author: drtbike225
+Version: 1.0.0
+Module: LocalGameDownloader.dll
+Type: GenericPlugin
+Icon: icon.png

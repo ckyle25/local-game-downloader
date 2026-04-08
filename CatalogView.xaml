@@ -1,0 +1,126 @@
+<UserControl x:Class="LocalGameDownloader.CatalogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Foreground="{DynamicResource TextBrush}"
+             TextElement.Foreground="{DynamicResource TextBrush}"
+             d:DesignHeight="650"
+             d:DesignWidth="960">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     Margin="0,0,8,0"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Grid.Column="1"
+                    Width="90"
+                    Margin="0,0,8,0"
+                    Click="RefreshButton_Click"
+                    Content="Refresh" />
+            <Button Grid.Column="2"
+                    Width="120"
+                    Margin="0,0,8,0"
+                    Click="BrowseRootButton_Click"
+                    Content="Install Root..." />
+            <Button Grid.Column="3"
+                    Width="100"
+                    Margin="0,0,8,0"
+                    Click="InstallButton_Click"
+                    Content="{Binding InstallActionLabel}"
+                    IsEnabled="{Binding CanInstallActionSelected}" />
+            <Button Grid.Column="4"
+                    Width="90"
+                    Margin="0,0,8,0"
+                    Click="PlayButton_Click"
+                    Content="Play"
+                    IsEnabled="{Binding CanPlaySelected}" />
+            <Button Grid.Column="5"
+                    Width="110"
+                    Margin="0,0,8,0"
+                    Click="OpenFolderButton_Click"
+                    Content="Open Folder"
+                    IsEnabled="{Binding CanOpenFolderSelected}" />
+            <Button Grid.Column="6"
+                    Width="100"
+                    Click="QueueButton_Click"
+                    Content="Queue" />
+        </Grid>
+
+        <Border Grid.Row="1"
+                Margin="0,0,0,8"
+                Padding="10,8"
+                BorderBrush="{DynamicResource DividerBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
+            <StackPanel>
+                <TextBlock FontWeight="SemiBold" Text="Current Install Root" />
+                <TextBlock Margin="0,4,0,0" Text="{Binding InstallRootDisplay}" TextWrapping="Wrap" />
+                <TextBlock Margin="0,8,0,0" Text="{Binding StatusText}" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <DataGrid Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding VisibleGames}"
+                  SelectedItem="{Binding SelectedGame, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Binding="{Binding Name}" Header="Game" />
+                <DataGridTextColumn Width="120" Binding="{Binding StateLabel}" Header="State" />
+                <DataGridTextColumn Width="130" Binding="{Binding DisplayFileSize}" Header="Size" />
+                <DataGridTextColumn Width="160" Binding="{Binding UploadDateDisplay}" Header="Uploaded" />
+                <DataGridTextColumn Width="220" Binding="{Binding DownloadHost}" Header="Host" />
+                <DataGridTemplateColumn Width="140" Header="Details">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Margin="0,0,6,0"
+                                        Padding="8,2"
+                                        Click="OpenIgdbButton_Click"
+                                        Content="IGDB" />
+                                <Button Padding="8,2"
+                                        Click="OpenPcGamingWikiButton_Click"
+                                        Content="PCGW" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="3"
+                Margin="0,8,0,0"
+                Padding="10,8"
+                BorderBrush="{DynamicResource DividerBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
+            <StackPanel>
+                <TextBlock FontWeight="SemiBold" Text="{Binding SelectedGame.Name}" />
+                <TextBlock Margin="0,6,0,0" FontWeight="SemiBold" Text="{Binding SelectedGame.StateLabel}" />
+                <TextBlock Margin="0,6,0,0" Text="{Binding SelectedGame.StatusDetail}" TextWrapping="Wrap" />
+                <TextBlock Margin="0,6,0,0" Text="{Binding SelectedGame.DownloadUri}" TextWrapping="Wrap" />
+                <TextBlock Margin="0,6,0,0" Text="{Binding SelectedGame.DisplaySummary}" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

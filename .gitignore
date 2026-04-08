@@ -1,0 +1,10 @@
+bin/
+obj/
+dist/
+packages/
+.vs/
+*.user
+*.suo
+*.cache
+*.pdb
+net462-devpack.exe
